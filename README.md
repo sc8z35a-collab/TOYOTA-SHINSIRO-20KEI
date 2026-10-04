@@ -45,6 +45,8 @@ APK化時にはAndroid側の画面領域・システムバー設定、WebViewの
 
 `npm run check` でJavaScript構文を検証。静的ファイルのためビルド処理は不要。通常のローカル環境では `npm run dev` で確認可能。配信ルートを `dist/` にする。相対URLなのでサブディレクトリ配信にも対応する。
 
+GitHub Pages は `.github/workflows/deploy-pages.yml` が `main` の更新時に公開する。ルートの `index.html` が `dist/` に移動し、写真・フォント・PWAを含むアプリを表示する。ブランチからの配信でも同じURL構成になるよう、`.nojekyll` を配置する。Sites は引き続き `dist/` を配信ルートにする。
+
 内容を更新した際は、`app.js` と `sw.js` のキャッシュ名を同時に更新する。
 
 ## 権利・クレジット
