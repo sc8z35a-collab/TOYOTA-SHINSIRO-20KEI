@@ -362,5 +362,146 @@ export const BUDGETS = {
     },
     "oneWayKm": 82.345,
     "calculated": "2026-10-04"
+  },
+  "nebisodake": {
+    "roundTripKm": 106,
+    "low": 900,
+    "high": 1900,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 35.138111,
+      "lon": 137.439141,
+      "source": "ツーリズムとよたの所在地地図"
+    },
+    "oneWayKm": 53.014,
+    "calculated": "2026-10-06"
+  },
+  "kibyu": {
+    "roundTripKm": 75,
+    "low": 600,
+    "high": 1400,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 35.137792,
+      "lon": 137.304719,
+      "source": "ツーリズムとよたの所在地地図"
+    },
+    "oneWayKm": 37.457,
+    "calculated": "2026-10-06"
+  },
+  "ikuma": {
+    "roundTripKm": 91,
+    "low": 800,
+    "high": 1600,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 35.188644,
+      "lon": 137.385245,
+      "source": "ツーリズムとよたの所在地地図"
+    },
+    "oneWayKm": 45.52,
+    "calculated": "2026-10-06"
+  },
+  "ooda": {
+    "roundTripKm": 91,
+    "low": 800,
+    "high": 1600,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 34.927845,
+      "lon": 137.293227,
+      "source": "岡崎市観光協会の所在地地図"
+    },
+    "oneWayKm": 45.341,
+    "calculated": "2026-10-06"
+  },
+  "murazumi": {
+    "roundTripKm": 55,
+    "low": 400,
+    "high": 1000,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 35.02859410501413,
+      "lon": 137.19624689283754,
+      "source": "岡崎市観光協会の所在地地図"
+    },
+    "oneWayKm": 27.705,
+    "calculated": "2026-10-06"
+  },
+  "kuragari": {
+    "roundTripKm": 108,
+    "low": 900,
+    "high": 1900,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 34.93937431943067,
+      "lon": 137.39918784921272,
+      "source": "岡崎市観光協会の所在地地図"
+    },
+    "oneWayKm": 54.026,
+    "calculated": "2026-10-06"
+  },
+  "furumiya": {
+    "roundTripKm": 113,
+    "low": 1000,
+    "high": 2000,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 34.972252,
+      "lon": 137.428017,
+      "source": "文化遺産オンライン・古宮城跡所在地地図"
+    },
+    "oneWayKm": 56.636,
+    "calculated": "2026-10-06"
+  },
+  "kenmin-forest": {
+    "roundTripKm": 208,
+    "low": 1800,
+    "high": 3700,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 34.994792,
+      "lon": 137.626709,
+      "source": "Aichi Now・愛知県民の森所在地地図"
+    },
+    "oneWayKm": 104.042,
+    "calculated": "2026-10-06"
+  },
+  "kichijo": {
+    "roundTripKm": 148,
+    "low": 1300,
+    "high": 2600,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 34.847550573673445,
+      "lon": 137.47424125671387,
+      "source": "豊橋観光コンベンション協会・吉祥山所在地地図"
+    },
+    "oneWayKm": 73.895,
+    "calculated": "2026-10-06"
+  },
+  "sanage-falls": {
+    "roundTripKm": 43,
+    "low": 300,
+    "high": 800,
+    "hasToll": false,
+    "hasHighway": false,
+    "coordinate": {
+      "lat": 35.175267,
+      "lon": 137.177461,
+      "source": "ツーリズムとよた・猿投神社所在地地図（周辺道路規制を考慮した山麓の起点）"
+    },
+    "oneWayKm": 21.629,
+    "calculated": "2026-10-06",
+    "endpoint": "猿投神社付近"
   }
 };
