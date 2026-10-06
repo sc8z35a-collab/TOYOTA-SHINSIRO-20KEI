@@ -1,5 +1,6 @@
 import {createPhotoMotion} from './motion.js';
 import {createRandomPicker} from './random.js';
+import {createSceneScrubber} from './scrub.js';
 import { SPOTS, CATEGORIES, ORIGIN } from './data.js';
 import { PHOTOS } from './photos.js';
 import { BUDGETS } from './budgets.js';
@@ -40,6 +41,12 @@ $('#reduce-motion').checked=state.reduced;
 const reduced = ()=>state.reduced || matchMedia('(prefers-reduced-motion: reduce)').matches;
 const animate = (el, frames, options={}) => {if(!el || reduced())return Promise.resolve();return el.animate(frames,{duration:450,easing:'cubic-bezier(.22,1,.36,1)',...options}).finished.catch(()=>{});};
 const current=()=>SPOTS.find(s=>s.id===state.id);
+const photoChoices=storage.get('photo-choices',{});
+const gallery=s=>(s.gallery||[s.photo]).filter(key=>PHOTOS[key]);
+const photoKey=s=>gallery(s).includes(photoChoices[s.id])?photoChoices[s.id]:s.photo;
+const currentPhoto=s=>PHOTOS[photoKey(s)];
+const photoFocal=(s,p)=>({portrait:p?.focal||photoPosition[s.id]||'center',landscape:p?.focalWide||p?.focal||photoPosition[s.id]||'center'});
+const focalStyle=(s,p)=>{const f=photoFocal(s,p);return `--focal-portrait:${esc(f.portrait)};--focal-landscape:${esc(f.landscape)}`;};
 const areaNames={all:'豊田・新城・周辺',toyota:'豊田市',shinshiro:'新城市',nearby:'周辺の森'};
 const travelNames={all:'移動・散策',walk:'徒歩散策',cycle:'現地ライド',rail:'鉄道を使う'};
 const railSuitable=new Set(['kaisho','mikawa-hirose','asagiri-lake','ogyu-castle','kenmin-forest','kibyu','murazumi','kuragari']);
@@ -69,19 +76,20 @@ function revealPanel(direction=0){
 async function renderScene(direction=0,quiet=false){
  const spots=filtered();updateRandomButtons();$('#scenery-empty').hidden=!!spots.length;if(!spots.length)return;
  if(!spots.some(s=>s.id===state.id))state.id=spots[0].id;
- const s=current(),p=PHOTOS[s.photo],seq=++photoSequence;
+ const s=current(),p=currentPhoto(s),seq=++photoSequence;
  let available=!!p,loadingTimer;
  if(p){loadingTimer=setTimeout(()=>{if(seq===photoSequence)$('#photo-load').hidden=false;},200);const img=new Image();img.src=p.path;try{await img.decode();}catch{available=false;}clearTimeout(loadingTimer);}
  if(seq!==photoSequence)return;$('#photo-load').hidden=true;storage.set('current',s.id);
  $('#scene-name').textContent=s.name;$('#scene-reading').textContent=s.reading;$('#scene-area').textContent=s.city+'・'+s.district;$('#scene-category').textContent=CATEGORIES[s.category];$('#scene-summary').textContent=s.summary;
  $('#scene-tags').innerHTML=tags(s);$('#scene-time').textContent='原駅発・往復燃料費';$('#scene-budget').textContent=budget(s);
- const index=spots.indexOf(s);$('#scene-position').textContent=String(index+1).padStart(2,'0');$('#scene-total').textContent=String(spots.length).padStart(2,'0');$('#progress-fill').style.width=((index+1)/spots.length*100)+'%';
+ const index=spots.indexOf(s);$('#scene-position').textContent=String(index+1).padStart(2,'0');$('#scene-total').textContent=String(spots.length).padStart(2,'0');$('#progress-fill').style.width=(spots.length>1?index/(spots.length-1)*100:100)+'%';
+ $('#scene-progress').setAttribute('aria-valuemax',String(spots.length));$('#scene-progress').setAttribute('aria-valuenow',String(index+1));$('#scene-progress').setAttribute('aria-valuetext',`${index+1} / ${spots.length} ${s.name}`);
  $('#scene-ticks').innerHTML=spots.map((_,i)=>`<i class="${i===index?'current':i<index?'passed':''}"></i>`).join('');
  $('#location-label').textContent=state.area==='all'?'豊田・新城・周辺':areaNames[state.area];$('#scene-map').href=mapLink(s);
  $('#photo-unavailable').hidden=available;$('#unavailable-category').textContent=CATEGORIES[s.category];$('#unavailable-name').textContent=s.name;$('#unavailable-link').href=s.source;$('#photo-caption').textContent=available?`写真：${p.author}`:'';
- if(available)photoMotion.transition(p.path,{position:photoPosition[s.id]||'center',alt:s.name,direction,enabled:!quiet});else photoMotion.clear();
+ if(available)photoMotion.transition(p.path,{position:photoFocal(s,p),alt:p.caption||s.photoCaption||s.name,direction,enabled:!quiet});else photoMotion.clear();
  updateSaves();updateRandomButtons();if(!quiet)revealPanel(direction);
- for(const offset of [-1,1]){const neighbor=spots[(index+offset+spots.length)%spots.length];if(PHOTOS[neighbor.photo]){const img=new Image();img.src=PHOTOS[neighbor.photo].path;}}
+ for(const offset of [-1,1]){const neighbor=spots[(index+offset+spots.length)%spots.length];if(currentPhoto(neighbor)){const img=new Image();img.src=currentPhoto(neighbor).path;}}
 }
 const photoPosition={'nijogataki':'32% 55%','kansenji':'55% 30%','futase-tunnel':'47% center','rokusho':'50% 40%','furumiya':'52% 46%','kenmin-forest':'49% 60%','murazumi':'40% 50%','ooda':'62% 42%','kichijo':'27% 45%'};
 let turning=false;
@@ -94,7 +102,7 @@ async function randomScene(){
  photoMotion.mode(false);state.id=id;setView('scenery',true);
  try{await renderScene(after>before?1:-1);}finally{for(const button of [$('#scene-random'),$('#list-random')])button.removeAttribute('aria-busy');setTimeout(()=>turning=false,reduced()?0:280);}
 }
-function card(s){const p=PHOTOS[s.photo];return `<article class="spot-card"><button class="spot-card-main" data-spot="${s.id}" aria-label="${esc(s.name)}の風景を見る"><div class="card-image${p?'':' card-no-photo'}">${p?`<img src="${p.path}" alt="${esc(s.name)}" loading="lazy" decoding="async">`:`${icon(s.category==='forest'?'landscape':'pin')}`}<span class="card-number">${String(s.number).padStart(2,'0')}</span><span class="card-area">${esc(s.city)}・${esc(s.district)}</span></div><div class="card-info"><h2>${esc(s.name)}</h2>${tags(s)}<p>${esc(s.summary)}</p><div class="card-budget"><span>原駅発・往復燃料費</span><strong>${budget(s)}</strong></div></div></button><button class="card-save" data-save="${s.id}" aria-label="この場所を保存" aria-pressed="${state.saved.has(s.id)}">${icon('bookmark')}</button></article>`;}
+function card(s){const p=currentPhoto(s);return `<article class="spot-card"><button class="spot-card-main" data-spot="${s.id}" aria-label="${esc(s.name)}の風景を見る"><div class="card-image${p?'':' card-no-photo'}">${p?`<img src="${p.path}" alt="${esc(p.caption||s.photoCaption||s.name)}" style="${focalStyle(s,p)}" loading="lazy" decoding="async">`:`${icon(s.category==='forest'?'landscape':'pin')}`}<span class="card-number">${String(s.number).padStart(2,'0')}</span><span class="card-area">${esc(s.city)}・${esc(s.district)}</span></div><div class="card-info"><h2>${esc(s.name)}</h2>${tags(s)}<p>${esc(s.summary)}</p><div class="card-budget"><span>原駅発・往復燃料費</span><strong>${budget(s)}</strong></div></div></button><button class="card-save" data-save="${s.id}" aria-label="この場所を保存" aria-pressed="${state.saved.has(s.id)}">${icon('bookmark')}</button></article>`;}
 let observer;
 function observeCards(parent){if(reduced()||!('IntersectionObserver'in window))return;observer?.disconnect();observer=new IntersectionObserver(entries=>{let n=0;for(const entry of entries){if(entry.isIntersecting){animate(entry.target,[{opacity:0,transform:'translate3d(0,32px,0) scale(.97)'},{opacity:1,transform:'translate3d(0,0,0) scale(1)'}],{duration:700,delay:n++*55,fill:'backwards'});observer.unobserve(entry.target);}}},{threshold:.05});$$('.spot-card',parent).forEach(el=>observer.observe(el));}
 function renderList(){const list=filtered();updateRandomButtons();$('#spot-list').innerHTML=list.map(card).join('');$('#list-count').textContent=list.length+'件';$('#list-empty').hidden=!!list.length;$('#filter-description').textContent=[state.category==='all'?'すべての風景':CATEGORIES[state.category],state.travel==='all'?'':travelNames[state.travel]].filter(Boolean).join(' · ');$$('.quick-areas [data-area]').forEach(b=>{b.classList.toggle('selected',b.dataset.area===state.area);b.setAttribute('aria-pressed',String(b.dataset.area===state.area));});observeCards($('#spot-list'));updateSaves();}
@@ -116,11 +124,31 @@ function openDialog(dialog){
 }
 const closingDialogs=new WeakSet();
 async function closeDialog(dialog){if(!dialog.open||closingDialogs.has(dialog))return;closingDialogs.add(dialog);try{await animate(dialog,matchMedia('(orientation:landscape)').matches?[{transform:'translateX(0)',opacity:1},{transform:'translateX(24%)',opacity:0}]:[{transform:'translateY(0)',opacity:1},{transform:'translateY(18%)',opacity:0}],{duration:240,easing:'cubic-bezier(.4,0,1,1)'});dialog.close();}finally{closingDialogs.delete(dialog);if(!$('dialog[open]')){document.body.classList.remove('has-sheet');if(state.view==='scenery')photoMotion.resume();}}}
+function photoSource(p){return `写真：${esc(p.author)} · <a href="${p.source_url}" target="_blank" rel="noopener noreferrer">原画像</a> · <a href="${p.license_url}" target="_blank" rel="noopener noreferrer">${esc(p.license)}</a>`;}
+function filmstrip(s){
+ const keys=gallery(s);if(keys.length<2)return '';
+ return `<div class="photo-filmstrip" role="group" aria-label="${esc(s.name)}の写真">${keys.map((key,i)=>{const p=PHOTOS[key];return `<button class="film-frame" data-photo="${esc(key)}" aria-label="${esc(p.caption||p.title||s.name)}" aria-pressed="${key===photoKey(s)}"><img src="${p.path}" alt="" style="${focalStyle(s,p)}" loading="lazy" decoding="async"><span>${String(i+1).padStart(2,'0')}</span></button>`;}).join('')}</div>`;
+}
+let galleryRevision=0;
+async function selectPhoto(key){
+ const s=current(),p=PHOTOS[key];if(!p||!gallery(s).includes(key)||key===photoKey(s))return;
+ const ticket=++galleryRevision,image=new Image();image.src=p.path;try{await image.decode();}catch{return;}
+ if(ticket!==galleryRevision||s.id!==state.id||!$('#detail-dialog').open)return;
+ photoChoices[s.id]=key;storage.set('photo-choices',photoChoices);
+ const hero=$('.overview-photo img'),old=hero.cloneNode();old.className='gallery-outgoing';old.alt='';old.setAttribute('aria-hidden','true');hero.before(old);
+ hero.src=p.path;hero.alt=p.caption||s.photoCaption||s.name;hero.setAttribute('style',focalStyle(s,p));
+ $('[data-photo-caption]').textContent=p.caption||s.photoCaption||s.name;$('[data-photo-author]').textContent='写真：'+p.author;
+ $('[data-photo-source]').innerHTML=photoSource(p);
+ $$('[data-photo]',$('#detail-content')).forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.photo===key)));
+ animate(hero,[{opacity:.3,transform:'scale(1.045)'},{opacity:1,transform:'scale(1)'}],{duration:680});
+ animate(old,[{opacity:1},{opacity:0}],{duration:540}).finally(()=>old.remove());
+ await renderScene(0,true);
+}
 function details(){
- const s=current(),b=BUDGETS[s.id],p=PHOTOS[s.photo];
+ const s=current(),b=BUDGETS[s.id],p=currentPhoto(s);
  const title=`<div class="overview-title"><span>${String(s.number).padStart(2,'0')} / ${esc(s.city)}・${esc(s.district)}</span><h2 id="detail-title">${esc(s.name)}</h2></div>`;
- const hero=p?`<figure class="overview-hero"><button class="overview-photo" data-open-photo aria-label="${esc(s.name)}の写真を全画面で見る"><img src="${p.path}" alt="${esc(s.photoCaption||s.name)}" style="object-position:${photoPosition[s.id]||'center'}" decoding="async">${title}<span class="overview-expand">${icon('fullscreen')}</span></button><figcaption><span>${esc(s.photoCaption||s.name)}</span><span>写真：${esc(p.author)}</span></figcaption></figure>`:`<div class="overview-hero overview-graphic">${icon('landscape')}${title}<a href="${s.source}" target="_blank" rel="noopener noreferrer">公式の写真 ${icon('arrow')}</a></div>`;
- $('#detail-content').innerHTML=hero+`<div class="detail-body">${tags(s)}<p class="detail-description">${esc(s.description)}</p><section class="detail-section"><h3>住所</h3><a class="address-link" href="${mapLink(s)}" target="_blank" rel="noopener noreferrer">${esc(s.address)} ${icon('arrow')}</a></section><section class="detail-section"><h3>原駅から</h3><p class="route-summary">${esc(s.access)}</p><div class="route-links"><a href="${routeLink(s,'transit')}" target="_blank" rel="noopener noreferrer">${icon('rail')}電車・バス</a><a href="${routeLink(s,'bicycling')}" target="_blank" rel="noopener noreferrer">${icon('cycle')}自転車</a><a href="${routeLink(s,'driving')}" target="_blank" rel="noopener noreferrer">${icon('pin')}車</a></div></section><section class="detail-section"><h3>原駅発・車1台の往復燃料費</h3><p class="budget-number">${budget(s)}</p>${b?`<dl class="budget-model"><div><dt>往復距離</dt><dd>約${b.roundTripKm}km${b.endpoint?` / ${esc(b.endpoint)}`:''}</dd></div><div><dt>燃費</dt><dd>12～18km/L</dd></div><div><dt>ガソリン</dt><dd>160～190円/L</dd></div><div><dt>上限の距離補正</dt><dd>＋10％</dd></div></dl>`:''}${s.fees?`<div class="local-fees"><h4>現地費用</h4><p>${esc(s.fees)}</p></div>`:''}</section><div class="source-links"><a class="detail-source" href="${s.source}" target="_blank" rel="noopener noreferrer">出典 ${icon('arrow')}</a>${(s.extraSources||[]).map((u,i)=>`<a class="detail-source" href="${u}" target="_blank" rel="noopener noreferrer">資料 ${i+1} ${icon('arrow')}</a>`).join('')}${p?`<small class="photo-source">写真：${esc(p.author)} · <a href="${p.source_url}" target="_blank" rel="noopener noreferrer">${esc(p.license)}</a></small>`:''}</div></div>`;
+ const hero=p?`<figure class="overview-hero"><button class="overview-photo" data-open-photo aria-label="${esc(s.name)}の写真を全画面で見る"><img src="${p.path}" alt="${esc(p.caption||s.photoCaption||s.name)}" style="${focalStyle(s,p)}" decoding="async">${title}<span class="overview-expand">${icon('fullscreen')}</span></button><figcaption><span data-photo-caption>${esc(p.caption||s.photoCaption||s.name)}</span><span data-photo-author>写真：${esc(p.author)}</span></figcaption></figure>`:`<div class="overview-hero overview-graphic">${icon('landscape')}${title}<a href="${s.source}" target="_blank" rel="noopener noreferrer">公式の写真 ${icon('arrow')}</a></div>`;
+ $('#detail-content').innerHTML=hero+filmstrip(s)+`<div class="detail-body">${tags(s)}<p class="detail-description">${esc(s.description)}</p><section class="detail-section"><h3>住所</h3><a class="address-link" href="${mapLink(s)}" target="_blank" rel="noopener noreferrer">${esc(s.address)} ${icon('arrow')}</a></section><section class="detail-section"><h3>原駅から</h3><p class="route-summary">${esc(s.access)}</p><div class="route-links"><a href="${routeLink(s,'transit')}" target="_blank" rel="noopener noreferrer">${icon('rail')}電車・バス</a><a href="${routeLink(s,'bicycling')}" target="_blank" rel="noopener noreferrer">${icon('cycle')}自転車</a><a href="${routeLink(s,'driving')}" target="_blank" rel="noopener noreferrer">${icon('pin')}車</a></div></section><section class="detail-section"><h3>原駅発・車1台の往復燃料費</h3><p class="budget-number">${budget(s)}</p>${b?`<dl class="budget-model"><div><dt>往復距離</dt><dd>約${b.roundTripKm}km${b.endpoint?` / ${esc(b.endpoint)}`:''}</dd></div><div><dt>燃費</dt><dd>12～18km/L</dd></div><div><dt>ガソリン</dt><dd>160～190円/L</dd></div><div><dt>上限の距離補正</dt><dd>＋10％</dd></div></dl>`:''}${s.fees?`<div class="local-fees"><h4>現地費用</h4><p>${esc(s.fees)}</p></div>`:''}</section><div class="source-links"><a class="detail-source" href="${s.source}" target="_blank" rel="noopener noreferrer">出典 ${icon('arrow')}</a>${(s.extraSources||[]).map((u,i)=>`<a class="detail-source" href="${u}" target="_blank" rel="noopener noreferrer">資料 ${i+1} ${icon('arrow')}</a>`).join('')}${p?`<small class="photo-source" data-photo-source>${photoSource(p)}</small>`:''}</div></div>`;
  openDialog($('#detail-dialog'));
 }
 
@@ -129,7 +157,7 @@ function updateFilter(){for(const [key,id] of [['area','area-options'],['categor
 function filterOpen(){draft={...state};updateFilter();openDialog($('#filter-dialog'));}
 function reset(){Object.assign(state,{area:'all',category:'all',travel:'all',query:''});$('#search').value='';renderScene();renderList();}
 function credits(){
- $('#credits-content').innerHTML=SPOTS.map(s=>{const p=PHOTOS[s.photo];return `<article class="source-item"><h3>${String(s.number).padStart(2,'0')}　${esc(s.name)}</h3><a href="${s.source}" target="_blank" rel="noopener noreferrer">案内情報</a>${s.reference?` · <a href="${s.reference}" target="_blank" rel="noopener noreferrer">参考にした訪問記</a>`:''}${p?`<p>写真：${esc(p.author)}<br>撮影日表記：${esc(p.date_taken)}<br><a href="${p.source_url}" target="_blank" rel="noopener noreferrer">Wikimedia Commons 原画像</a> · <a href="${p.license_url}" target="_blank" rel="noopener noreferrer">${esc(p.license)}</a><br>${esc(p.changes)}<br>写真の権利は原作者に帰属。写真には表示した原ライセンスが適用されます。</p>`:'<a href="${s.source}" target="_blank" rel="noopener noreferrer">公式の写真</a>'}</article>`;}).join('')+'<article class="source-item"><h3>フォント</h3><p>Noto Sans JP / Noto Serif JP。掲載文字に合わせてサブセット化。</p><a href="./assets/NotoSansJP-OFL.txt" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a></article><article class="source-item"><h3>距離・燃料費</h3><p>OpenStreetMap の道路データを Valhalla で経路計算し、2026年10月4日・6日に記録。</p><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a><p>低額側：往復距離 ÷ 18 × 160。上限側：往復距離 × 1.1 ÷ 12 × 190。100円単位に丸めています。</p></article>';
+ $('#credits-content').innerHTML=SPOTS.map(s=>`<article class="source-item"><h3>${String(s.number).padStart(2,'0')}　${esc(s.name)}</h3><a href="${s.source}" target="_blank" rel="noopener noreferrer">案内情報</a>${s.reference?` · <a href="${s.reference}" target="_blank" rel="noopener noreferrer">参考にした訪問記</a>`:''}${gallery(s).map(key=>{const p=PHOTOS[key];return `<p>${esc(p.title||p.caption||s.photoCaption||s.name)}<br>${photoSource(p)}${p.credit?`<br>${esc(p.credit)}`:''}${p.date_taken?`<br>撮影日：${esc(p.date_taken)}`:''}<br>${esc(p.changes)}</p>`;}).join('')}</article>`).join('')+'<article class="source-item"><h3>フォント</h3><p>Noto Sans JP / Noto Serif JP</p><a href="./assets/NotoSansJP-OFL.txt" target="_blank" rel="noopener noreferrer">SIL Open Font License 1.1</a></article><article class="source-item"><h3>距離・燃料費</h3><p>OpenStreetMap / Valhalla。2026年10月4日・6日の経路計算。</p><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">© OpenStreetMap contributors · ODbL</a><p>低額側：往復距離 ÷ 18 × 160。上限側：往復距離 × 1.1 ÷ 12 × 190。100円単位。</p></article>';
  openDialog($('#credits-dialog'));
 }
 // Fullscreen is attempted at launch and once during the first deliberate touch.
@@ -162,16 +190,17 @@ $('#random-start').onchange=e=>{state.randomStart=e.target.checked;storage.set('
 $('#reduce-motion').onchange=e=>{state.reduced=e.target.checked;storage.set('motion',state.reduced);document.body.classList.toggle('reduce-motion',state.reduced);if(state.reduced)document.getAnimations?.().forEach(a=>a.cancel());photoMotion.resume();};
 $$('[data-icon]').forEach(el=>el.innerHTML=icon(el.dataset.icon));for(const [id,name] of Object.entries({'fullscreen-button':'fullscreen','scene-save':'bookmark','previous':'previous','next':'next','list-filter':'filter','search-icon':'search','saved-empty-icon':'bookmark'}))$('#'+id).innerHTML=icon(name);
 
-document.addEventListener('keydown',e=>{if(state.view!=='scenery'||$('dialog[open]')||e.target.matches('input'))return;if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1);if(e.key==='Escape')photoMotion.mode(false);});
-$('#detail-content').addEventListener('click',async e=>{const button=e.target.closest('[data-open-photo]');if(!button)return;const fly=photoMotion.captureFlight($('img',button));await closeDialog($('#detail-dialog'));photoMotion.mode(true);if(fly)await fly();photoMotion.resume();});
+document.addEventListener('keydown',e=>{if(state.view!=='scenery'||$('dialog[open]')||e.target.matches('input')||e.target.closest('[data-scrubber]'))return;if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1);if(e.key==='Escape')photoMotion.mode(false);});
+$('#detail-content').addEventListener('click',async e=>{const thumb=e.target.closest('[data-photo]');if(thumb){selectPhoto(thumb.dataset.photo);return;}const button=e.target.closest('[data-open-photo]');if(!button)return;const fly=photoMotion.captureFlight($('img:not(.gallery-outgoing)',button));await closeDialog($('#detail-dialog'));photoMotion.mode(true);if(fly)await fly();photoMotion.resume();});
 const photoMotion=createPhotoMotion({reduced,isScenery:()=>state.view==='scenery'&&!$('dialog[open]'),onStep:step,onDetails:details});
+createSceneScrubber({element:$('#scene-progress'),getItems:filtered,getCurrent:()=>state.id,onStart:()=>photoMotion.pause(),onSelect:async id=>{state.id=id;await renderScene(0,true);},onFinish:()=>{revealPanel();photoMotion.resume();}});
 $('#scene-map').insertAdjacentHTML('beforeend',icon('arrow'));
 $('#detail-open').insertAdjacentHTML('beforeend',icon('next'));
 $('#list-title').textContent=SPOTS.length+'景';
 renderScene();
 
-const offlineAssets=['./','./index.html','./style.css','./experience.css','./motion.js','./random.js','./assets/contours.svg','./app.js','./data.js','./photos.js','./budgets.js','./manifest.webmanifest','./assets/icon-192.png','./assets/icon-512.png','./assets/NotoSerifJP.woff2','./assets/NotoSansJP.woff2','./assets/NotoSerifJP-OFL.txt','./assets/NotoSansJP-OFL.txt',...Object.values(PHOTOS).map(p=>p.path)];
+const offlineAssets=['./','./index.html','./style.css','./experience.css','./motion.js','./random.js','./scrub.js','./assets/contours.svg','./app.js','./data.js','./photos.js','./budgets.js','./manifest.webmanifest','./assets/icon-192.png','./assets/icon-512.png','./assets/NotoSerifJP.woff2','./assets/NotoSansJP.woff2','./assets/NotoSerifJP-OFL.txt','./assets/NotoSansJP-OFL.txt',...Object.values(PHOTOS).map(p=>p.path)];
 let serviceWorkerReady;
-async function updateOfflineState(){try{const c=await caches.open('mikawa-offline-v4');const found=await Promise.all(offlineAssets.map(u=>c.match(new URL(u,location.href).href)));const count=found.filter(Boolean).length;$('#offline-state').textContent=count===offlineAssets.length?'保存済み':count?`${count} / ${offlineAssets.length}`:'未保存';}catch{$('#offline-state').textContent='利用できません';}}
+async function updateOfflineState(){try{const c=await caches.open('mikawa-offline-v5');const found=await Promise.all(offlineAssets.map(u=>c.match(new URL(u,location.href).href)));const count=found.filter(Boolean).length;$('#offline-state').textContent=count===offlineAssets.length?'保存済み':count?`${count} / ${offlineAssets.length}`:'未保存';}catch{$('#offline-state').textContent='利用できません';}}
 if('serviceWorker'in navigator&&window.isSecureContext){serviceWorkerReady=navigator.serviceWorker.register('./sw.js').then(()=>navigator.serviceWorker.ready).then(()=>updateOfflineState()).catch(()=>{$('#offline-state').textContent='利用できません';});}else{$('#offline-state').textContent='利用できません';}
-$('#offline-download').onclick=async()=>{const button=$('#offline-download');if(!('caches'in window)||!serviceWorkerReady){return;}button.disabled=true;let count=0;try{await serviceWorkerReady;const cache=await caches.open('mikawa-offline-v4');for(const asset of offlineAssets){const url=new URL(asset,location.href).href;if(!(await cache.match(url))){const response=await fetch(url,{cache:'reload'});if(!response.ok)throw new Error('download');await cache.put(url,response);}$('#offline-state').textContent=`${++count} / ${offlineAssets.length}`;}$('#offline-state').textContent='保存済み';toast('写真と案内をオフライン保存しました。');}catch{await updateOfflineState();}finally{button.disabled=false;}};
+$('#offline-download').onclick=async()=>{const button=$('#offline-download');if(!('caches'in window)||!serviceWorkerReady){return;}button.disabled=true;let count=0;try{await serviceWorkerReady;const cache=await caches.open('mikawa-offline-v5');for(const asset of offlineAssets){const url=new URL(asset,location.href).href;if(!(await cache.match(url))){const response=await fetch(url,{cache:'reload'});if(!response.ok)throw new Error('download');await cache.put(url,response);}$('#offline-state').textContent=`${++count} / ${offlineAssets.length}`;}$('#offline-state').textContent='保存済み';toast('写真と案内をオフライン保存しました。');}catch{await updateOfflineState();}finally{button.disabled=false;}};

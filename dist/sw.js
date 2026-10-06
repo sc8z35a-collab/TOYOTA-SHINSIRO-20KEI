@@ -1,7 +1,11 @@
-const CACHE='mikawa-offline-v4';
-const SHELL=['./','./index.html','./style.css','./experience.css','./motion.js','./random.js','./assets/contours.svg','./app.js','./data.js','./photos.js','./budgets.js','./manifest.webmanifest','./assets/icon-192.png','./assets/icon-512.png','./assets/NotoSerifJP.woff2','./assets/NotoSansJP.woff2','./assets/NotoSerifJP-OFL.txt','./assets/NotoSansJP-OFL.txt'];
+const CACHE='mikawa-offline-v5';
+const SHELL=['./','./index.html','./style.css','./experience.css','./motion.js','./random.js','./scrub.js','./assets/contours.svg','./assets/nijogataki.webp','./app.js','./data.js','./photos.js','./budgets.js','./manifest.webmanifest','./assets/icon-192.png','./assets/icon-512.png','./assets/NotoSerifJP.woff2','./assets/NotoSansJP.woff2','./assets/NotoSerifJP-OFL.txt','./assets/NotoSansJP-OFL.txt'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL)).then(()=>self.skipWaiting())));
-self.addEventListener('activate',event=>event.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('mikawa-offline-')&&k!==CACHE).map(k=>caches.delete(k)))),self.clients.claim()])));
+self.addEventListener('activate',event=>event.waitUntil((async()=>{
+ const cache=await caches.open(CACHE),keys=(await caches.keys()).filter(k=>k.startsWith('mikawa-offline-')&&k!==CACHE);
+ for(const key of keys){const old=await caches.open(key);for(const request of await old.keys()){if(new URL(request.url).pathname.includes('/assets/')&&!(await cache.match(request))){const response=await old.match(request);if(response)await cache.put(request,response);}}await caches.delete(key);}
+ await self.clients.claim();
+})()));
 self.addEventListener('fetch',event=>{
  const request=event.request,url=new URL(request.url);
  if(request.method!=='GET'||url.origin!==self.location.origin)return;

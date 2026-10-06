@@ -21,9 +21,10 @@ export function createPhotoMotion({reduced,isScenery,onStep,onDetails}){
   const crossfade=!photo.hidden&&photo.complete&&photo.naturalWidth>0&&photo.getAttribute('src')!==src;
   previous.getAnimations().forEach(a=>a.cancel());
   if(crossfade&&enabled&&!reduced()){
-   previous.src=photo.src;previous.style.objectPosition=photo.style.objectPosition;previous.hidden=false;
+   previous.src=photo.src;previous.style.objectPosition=getComputedStyle(photo).objectPosition;previous.hidden=false;
   }else previous.hidden=true;
-  stop();photo.getAnimations().forEach(a=>a.cancel());reset();photo.src=src;photo.alt=alt;photo.style.objectPosition=position;photo.hidden=false;
+  stop();photo.getAnimations().forEach(a=>a.cancel());reset();photo.src=src;photo.alt=alt;
+  photo.style.removeProperty('object-position');photo.style.setProperty('--focal-portrait',typeof position==='string'?position:position.portrait||'center');photo.style.setProperty('--focal-landscape',typeof position==='string'?position:position.landscape||position.portrait||'center');photo.hidden=false;
   if(reduced()||!enabled){previous.hidden=true;return;}
   if(!previous.hidden){const outgoing=previous.animate([{opacity:1,transform:oldTransform==='none'?'scale(1)':oldTransform},{opacity:0,transform:`translate3d(${-direction*32}px,0,0) scale(1.055)`}],{duration:780,easing:'cubic-bezier(.2,.65,.25,1)',fill:'both'});outgoing.finished.catch(()=>{}).then(()=>{if(ticket===revision){previous.hidden=true;outgoing.cancel();}});}
   const entrance=photo.animate([{opacity:crossfade?.25:0,transform:`translate3d(${direction*30}px,0,0) scale(1.085)`},{opacity:1,transform:'translate3d(0,0,0) scale(1.012)'}],{duration:900,easing:'cubic-bezier(.16,1,.3,1)',fill:'both'});
@@ -37,7 +38,7 @@ export function createPhotoMotion({reduced,isScenery,onStep,onDetails}){
   return async()=>{try{const to=canvas.getBoundingClientRect();await clone.animate([{top:r.top+'px',left:r.left+'px',width:r.width+'px',height:r.height+'px',borderRadius:'11px',opacity:1},{top:to.top+'px',left:to.left+'px',width:to.width+'px',height:to.height+'px',borderRadius:'0px',opacity:1,offset:.82},{top:to.top+'px',left:to.left+'px',width:to.width+'px',height:to.height+'px',borderRadius:'0px',opacity:0}],{duration:760,easing:'cubic-bezier(.2,.8,.2,1)',fill:'both'}).finished;}catch{}finally{clone.remove();resume();}};
  }
  view.addEventListener('pointerdown',e=>{
-  if(e.target.closest('button,a')||e.pointerType==='mouse'&&e.button!==0)return;
+  if(e.target.closest('button,a,[data-scrubber]')||e.pointerType==='mouse'&&e.button!==0)return;
   const isPhoto=!!e.target.closest('.photo-stage');touches.set(e.pointerId,{x:e.clientX,y:e.clientY,isPhoto});
   if(isPhoto){try{stage.setPointerCapture(e.pointerId);}catch{}}
   if(touches.size===2&&[...touches.values()].every(p=>p.isPhoto)){
@@ -67,6 +68,6 @@ export function createPhotoMotion({reduced,isScenery,onStep,onDetails}){
  }
  view.addEventListener('pointerup',e=>finish(e));view.addEventListener('pointercancel',e=>finish(e,true));
  document.addEventListener('visibilitychange',()=>{if(document.hidden)pause();else if(isScenery())resume();});
- window.addEventListener('resize',()=>{touches.clear();gesture=pinch=null;pinched=false;reset();});
+ window.addEventListener('resize',()=>{touches.clear();gesture=pinch=null;pinched=false;reset();if(isScenery())resume();});
  return {transition,clear,reset,mode,pause,resume,captureFlight};
 }

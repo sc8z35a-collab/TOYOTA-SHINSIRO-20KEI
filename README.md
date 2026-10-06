@@ -76,3 +76,5 @@ GitHub Pages は `.github/workflows/deploy-pages.yml` が `main` の更新時に
 フォント：Noto Sans JP / Noto Serif JP（SIL Open Font License 1.1）。掲載文字に合わせてサブセット化。ライセンス全文は `dist/assets/*-OFL.txt`。
 
 道路距離：© OpenStreetMap contributors（ODbL）、Valhallaによる経路計算。
+
+2026年10月7日の更新：風景の目盛りをドラッグして選択、縦横それぞれの写真構図、写真選択の保存、オフライン保存済み写真の引き継ぎ。JavaScript構文と写真・データの整合性を確認。ブラウザー実機確認は未実施。
