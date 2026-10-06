@@ -218,5 +218,75 @@ export const PHOTOS = {
     "description": "亀山城本丸跡",
     "path": "./assets/kameyama.webp",
     "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "sanage-falls": {
+    "author": "Tomio344456",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Futatsugama-no-taki_in_Mount_Sanage,_Sanage-cho_Toyota_2009.jpg",
+    "date_taken": "2009-05-09 05:39:26",
+    "description": "猿投山 - 二ツ釜の滝（豊田市猿投町、2009年（平成21年）5月）",
+    "path": "./assets/sanage-falls.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "furumiya": {
+    "author": "投稿者が撮影",
+    "license": "Public domain",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Furumiyajyo.jpg",
+    "date_taken": "2008",
+    "description": "古宮城",
+    "path": "./assets/furumiya.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "kichijo": {
+    "author": "Alpsdake",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Mount_Kichijo_(peak).jpg",
+    "date_taken": "2018-02-09 08:08:36",
+    "description": "Peak of Mount Kichijo and Mount Hongu in Aichi Prefecture, Japan.",
+    "path": "./assets/kichijo.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "ooda": {
+    "author": "Evelyn-rose",
+    "license": "CC0",
+    "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Odanomori-2.jpg",
+    "date_taken": "2021-04-10 15:11:19",
+    "description": "おおだの森、頂上の小屋（岡崎市樫山町）",
+    "path": "./assets/ooda.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "murazumi": {
+    "author": "Tomio344456",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Mount_Murazumi-yama_Stroll_Path,_Okuyamada-cho_Okazaki_2022.jpg",
+    "date_taken": "20 May 2022, 10:51:07",
+    "description": "村積山散策路（岡崎市奥山田町、2022年（令和4年）5月）",
+    "path": "./assets/murazumi.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "kuragari": {
+    "author": "Bariston",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Kuragari_valley3.jpg",
+    "date_taken": "23 November 2025, 10:19:08",
+    "description": "くらがり渓谷の紅葉",
+    "path": "./assets/kuragari.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
+  },
+  "kenmin-forest": {
+    "author": "Bariston",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Aichikenmin1.jpg",
+    "date_taken": "2021-11-23 10:30:03",
+    "description": "愛知県民の森にある不動滝",
+    "path": "./assets/kenmin-forest.webp",
+    "changes": "WebP変換・縮小。画面比率に合わせた表示時トリミング。"
   }
 };
