@@ -1,0 +1,51 @@
+{
+  "photos": {},
+  "searched": [
+    {
+      "id": "kurotani",
+      "name": "黒谷渓谷",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "hoden",
+      "name": "保殿の七滝",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "komochi",
+      "name": "子持ち桂",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "tomoe",
+      "name": "巴山",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "nebisodake",
+      "name": "寧比曽岳",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "ikuma",
+      "name": "伊熊神社の社叢",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    },
+    {
+      "id": "kibyu",
+      "name": "黍生山",
+      "result": "今回の短い検索では、所在地と個別ライセンスを確認できる写真を取得できなかった。"
+    }
+  ],
+  "official_catalogue": {
+    "url": "https://www.city.toyota.aichi.jp/shisei/tokei/1018965/1052850/index.html",
+    "policy": "https://www.city.toyota.aichi.jp/shisei/tokei/1018965/1052850/1053207.html",
+    "notes": "豊田市画像・動画オープンデータ。公開写真ごとにCCライセンスの種類が異なる。個別作品を確認する前に再利用はしない。"
+  },
+  "checked_sources": [
+    "Wikimedia Commons",
+    "FIND/47",
+    "Wikipedia page-image discovery",
+    "豊田市公式画像・動画オープンデータ窓口"
+  ]
+}

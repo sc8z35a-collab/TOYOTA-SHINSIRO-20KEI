@@ -101,3 +101,16 @@ body.reduce-motion *,body.reduce-motion *:before,body.reduce-motion *:after{anim
 @media(orientation:portrait){.scene-summary{max-width:100%;margin:9px 0;line-height:1.8}.scene-quick-info{margin-top:12px}.photo-canvas{height:88%}}
 @media(orientation:landscape){.button-random{flex-basis:47px;min-height:38px;font-size:7px;color:#526a43;border-color:#b6c3a6;background:#edf0e466;gap:3px}.button-random svg{width:15px;height:15px}.overview-photo{height:68svh;min-height:240px;max-height:440px}.overview-title{left:24px;right:24px;bottom:22px}.overview-title h2{font-size:28px}.overview-hero figcaption{padding:10px 24px 0}.detail-body{padding:17px 24px 25px}.detail-toolbar{padding:0}.detail-toolbar .close-dialog{top:10px;right:12px}.overview-graphic{min-height:290px}.random-pill{min-height:36px}.scene-actions{gap:6px}}
 @media(orientation:landscape) and (max-height:365px){.button-random{min-height:34px;flex-basis:42px}.overview-photo{height:73svh;min-height:210px}}
+
+/* One composition per orientation, shared by cards, overview and full screen. */
+.scene-photo,.card-image img,.overview-photo img,.film-frame img{--photo-focal:var(--focal-portrait,center);object-position:var(--photo-focal);transition:object-position .75s var(--ease-out)}
+.scene-progress{min-height:34px;touch-action:none;cursor:ew-resize;user-select:none;position:relative;outline-offset:5px;border-radius:5px}
+.scene-progress.scrubbing .progress-track>span{transition:none}.scene-progress.scrubbing .scene-ticks i.current{height:14px}.scene-progress:focus-visible{outline:1px solid #b4c39b}
+.quick-areas{overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity}.quick-areas::-webkit-scrollbar{display:none}.quick-areas button{flex-shrink:0;scroll-snap-align:start}
+.photo-filmstrip{display:flex;gap:10px;padding:16px 25px 0;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none}.photo-filmstrip::-webkit-scrollbar{display:none}
+.film-frame{position:relative;flex:0 0 100px;height:72px;border-radius:7px;overflow:hidden;padding:0;background:#243a2a;scroll-snap-align:start;box-shadow:0 3px 10px #1d312016;opacity:.58;transition:opacity .35s,box-shadow .35s,transform .45s var(--ease-out)}
+.film-frame img{width:100%;height:100%;object-fit:cover;display:block}.film-frame span{position:absolute;left:7px;bottom:5px;font:10px Georgia,serif;color:#fff;text-shadow:0 1px 5px #0008}
+.film-frame[aria-pressed=true]{opacity:1;box-shadow:0 0 0 2px var(--paper),0 0 0 3px #8b9b7b,0 5px 15px #243d2420}.film-frame:active{transform:scale(.94)}
+.overview-photo .gallery-outgoing{z-index:0;pointer-events:none}.overview-photo .gallery-outgoing+img{z-index:0}
+.overview-hero figcaption{align-items:flex-start}.overview-hero figcaption>span:first-child{max-width:68%}.photo-source{overflow-wrap:anywhere}
+@media(orientation:landscape){.scene-photo,.card-image img,.overview-photo img,.film-frame img{--photo-focal:var(--focal-landscape,center)}.photo-filmstrip{padding-left:24px;padding-right:24px}.film-frame{flex-basis:116px;height:70px}.scene-progress{min-height:30px}}
