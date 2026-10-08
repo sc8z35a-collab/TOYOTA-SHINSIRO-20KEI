@@ -1,0 +1,198 @@
+{
+  "repository_url": "https://github.com/sc8z35a-collab/TOYOTA-SHINSIRO-20KEI",
+  "quality": 85,
+  "photos": [
+    {
+      "path": "dist/assets/furumiya-detail-entry.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac16909.jpg",
+      "source_sha256": "b46e634f781e10de2893ed747eda601985df3800499deaa7315c77e4c89f965b",
+      "blob_sha": "581e249666a8a018cd8adddbe03ca6edb44032d4"
+    },
+    {
+      "path": "dist/assets/furumiya-detail-moat.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac16916.jpg",
+      "source_sha256": "53986d883ff094f24cb3cab1ff3011551a1e2e67456c724281546ed258354cb1",
+      "blob_sha": "4c813b89bf6eda47f997b90911934fbe93166de3"
+    },
+    {
+      "path": "dist/assets/furumiya-detail-slope.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac16913.jpg",
+      "source_sha256": "def09b595cb628bfd8dde25282821b299b756c4df04a3ce28df16ab02755721d",
+      "blob_sha": "fd2b8cb1993e4c5159f23c63a11f9e4763d4ebc4"
+    },
+    {
+      "path": "dist/assets/horai-detail-bridge.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Hachiishi_Bridge_on_Aichi_Prefectural_Road_Route_424.jpg/1920px-Hachiishi_Bridge_on_Aichi_Prefectural_Road_Route_424.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "5e98099e952db3c43b3dcbac430b0d5aab61e696e904062e5a43128057c201e0",
+      "blob_sha": "4056fe8e2722120dc9f0c532e8f1138319d5cc7a"
+    },
+    {
+      "path": "dist/assets/horai-detail-water.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f7/Ure_Dam_lake.jpg/1920px-Ure_Dam_lake.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "bcca839c89cf0306e65fbfda104ba884cbd03079ddbde2d446dd8c93966f84f2",
+      "blob_sha": "7fbacb77841299d526311473c3aa602f45a4d25d"
+    },
+    {
+      "path": "dist/assets/hyakken-detail-flow.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1e/%E7%99%BE%E9%96%93%E6%BB%9D_-_panoramio_%281%29.jpg/1920px-%E7%99%BE%E9%96%93%E6%BB%9D_-_panoramio_%281%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "6b4dc6db7376847fbabe288603c1df0a7c7160d171185b21a90bcc429f9859ca",
+      "blob_sha": "112b499c729dcc1a941b2e1b2a49fcf9f77da0c8"
+    },
+    {
+      "path": "dist/assets/hyakken-detail-head.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/59/%E7%99%BE%E9%96%93%E6%BB%9D%E6%BB%9D%E9%A0%AD_-_panoramio.jpg/1920px-%E7%99%BE%E9%96%93%E6%BB%9D%E6%BB%9D%E9%A0%AD_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "69ec6dbdfd4a6a2f73edbd6bb7f6835facf52ecad9475417232dc163aca4d29f",
+      "blob_sha": "119d970e40cd265dbe406487ed5edb0cf05cde93"
+    },
+    {
+      "path": "dist/assets/isegami-detail-entrance.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8f/%E4%BC%8A%E4%B8%96%E8%B3%80%E7%BE%8E%E9%9A%A7%E9%81%93.jpg/1920px-%E4%BC%8A%E4%B8%96%E8%B3%80%E7%BE%8E%E9%9A%A7%E9%81%93.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "65c86e6aac9df91b44ab963c9c082db1cf08a16adb222548f08687cb2e7e2c57",
+      "blob_sha": "efc63452c81cb4e53b3203daeb1813ea125ff0c3"
+    },
+    {
+      "path": "dist/assets/isegami-detail-old-road.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/77/Asugawacho%2C_Toyota%2C_Aichi_Prefecture_444-2601%2C_Japan_-_panoramio.jpg/1920px-Asugawacho%2C_Toyota%2C_Aichi_Prefecture_444-2601%2C_Japan_-_panoramio.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "0f4d2fad00b37339657b98687e8ba05bb4427f436f3edcef0246fe3f7b4120a8",
+      "blob_sha": "15767e788e9b2c75804d15b5c47526512d329d39"
+    },
+    {
+      "path": "dist/assets/kaisho-detail-pond.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1b/Akaike_in_Kaisho_Forest_-_1.jpg/1920px-Akaike_in_Kaisho_Forest_-_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "0301049f79e98ce1ae0921de7e7165e059ffd981c0cac5ccb0d5c8a34bc71e7e",
+      "blob_sha": "4d3cd728e0b6c0c3f7f045af7ddca2a0349cd7e7"
+    },
+    {
+      "path": "dist/assets/kaisho-detail-trail.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Hiking_trail_in_Kaisho_Forest_-_1.jpg/1920px-Hiking_trail_in_Kaisho_Forest_-_1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "214871c67f6a115d045c052b8d05d2d2109a1a9d522e3ca1d4970815ec6996da",
+      "blob_sha": "3eabd62add6736197e3fccb6309984a9418c3b94"
+    },
+    {
+      "path": "dist/assets/kaisho-detail-wetland.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8b/Wetlands_in_Kaisho_Forest.jpg/1280px-Wetlands_in_Kaisho_Forest.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "769cb8f28d964de3f8d92c5fb4c2d7b3cb82cbb0a431531bfad140366c876848",
+      "blob_sha": "924c47732403be225f3c79a917860d88e1aedca2"
+    },
+    {
+      "path": "dist/assets/kameyama-detail-path.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/90/Kameyama_Castle1.jpg/1920px-Kameyama_Castle1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "2caa71b5f49ec1cdf31b3f17fe08877f1cfa1864736f488e2074a552471a1120",
+      "blob_sha": "65ab5398a9eac8a802989e459c692e83d7696d8c"
+    },
+    {
+      "path": "dist/assets/kameyama-detail-woods.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b7/Kameyama_Castle2.jpg/1920px-Kameyama_Castle2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "48181bab3c88aa9183c147e71f924daaaeec4bf5f8fcad08bbcc637d7aab8344",
+      "blob_sha": "e9f7bc91e811c56c74257a2b487d278a514e9fd0"
+    },
+    {
+      "path": "dist/assets/kansenji-detail-grounds.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/38/Kansenji1.jpg/1920px-Kansenji1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "9cb424da99f0e2d2b6561fe224a610992f6c7829e565f1bd533843845740257b",
+      "blob_sha": "a973d25fef213b47f543591ca5210ca946636486"
+    },
+    {
+      "path": "dist/assets/kenmin-detail-autumn.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/b/be/Aichikenmin2.jpg/1920px-Aichikenmin2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "06cc09a288b09f8eee16a1ad2b08fba6d73c4e71ca2e1754134c3fe9e54ba3a2",
+      "blob_sha": "24dd65783d23860afbab67bd999d4da4a7372b49"
+    },
+    {
+      "path": "dist/assets/kibyu-detail-clearing.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac049007.jpg",
+      "source_sha256": "d7505a2a76d87db0589b0dc42c78dc25bb66616b0030b88cb66b11715c38bb26",
+      "blob_sha": "2572a971d9385f973970443cc2473003799ad0d3"
+    },
+    {
+      "path": "dist/assets/kibyu-detail-ridges.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac049009.jpg",
+      "source_sha256": "3b87f384ed9551b888083ac5a24d65f277deb5b0bb8fe9d977c62266d68f623d",
+      "blob_sha": "67cb9ed3e0385b5a8e8b54bc32be14c76f77cfe7"
+    },
+    {
+      "path": "dist/assets/kibyu-detail-roots.webp",
+      "url": "https://www.his-trip.info/siseki/img/cac049003.jpg",
+      "source_sha256": "3d95e68dfa6ee5bb8ed31a0de66d329fdc22b8ee9893d27c64a92109ede65e62",
+      "blob_sha": "c54d282f6aa0613ed17af604c2aef1a87b2d6fa0"
+    },
+    {
+      "path": "dist/assets/kichijo-detail-path.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f9/Mount_Kichijo_%282018-03-24%29.jpg/1920px-Mount_Kichijo_%282018-03-24%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "b3bc5dd95bbfc8e73e303cc2a7569de87358a80e508ff26f3405560a149edb51",
+      "blob_sha": "202caaac5ae46e7b4dc4f94567f835cb4a449833"
+    },
+    {
+      "path": "dist/assets/kichijo-detail-view.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/56/Mount_Kichijo_%282018-06-12%29.jpg/1920px-Mount_Kichijo_%282018-06-12%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "05759c9261c2b69d0d8a2bfbba82f94157b24266b1a93f16d539250b718f0e37",
+      "blob_sha": "386191c665dd2322224781831aed662dccdd60e9"
+    },
+    {
+      "path": "dist/assets/kirara-detail-forest.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/1/1f/Kiraranomori-2.jpg/1920px-Kiraranomori-2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "e2ca14363f2b872188312fd8a45fce7789f0ebd26567ffcb961737f71aa280df",
+      "blob_sha": "55b774d9f519613db7353d229bdd055d54867ca5"
+    },
+    {
+      "path": "dist/assets/kuragari-detail-waterfall.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/5/53/Kuragari_valley1.jpg/1920px-Kuragari_valley1.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "c0c846b7aa1a8701faad82bda88776dd1f460bf40cf0e9efd2db1b52fc46e45f",
+      "blob_sha": "a6e74bf18ea8ed763c19264ef2632e23e96884fb"
+    },
+    {
+      "path": "dist/assets/mikawa-hirose-detail-platform.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4c/Mikawa_Hirose_Station_2009.jpg/1920px-Mikawa_Hirose_Station_2009.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "031ef8b90f61165090f8bd9243df00478bf4c9f5deed2705c045a7bf27b9d230",
+      "blob_sha": "ff5cba638750caa1612f3de795a956340e645e0b"
+    },
+    {
+      "path": "dist/assets/mikawa-hirose-detail-station.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d8/Mikawa-hirose_station_01.jpg/1920px-Mikawa-hirose_station_01.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "1b770693e58d3390cdafba30f1cfa78b8a51d58b6d5115bdd80aa17ebba971ad",
+      "blob_sha": "2aa31087f448c0a3a598d1ddf7cc66cc0fcd955a"
+    },
+    {
+      "path": "dist/assets/ogyu-detail-earthworks.webp",
+      "url": "https://www.his-trip.info/siseki/img/%EF%BD%83ac00809.jpg",
+      "source_sha256": "99e38fd17bc90f5bcaa180e484de5eb3b09ff0f03a31d3e0ef5d22b119fa7c8f",
+      "blob_sha": "02dd54e201d4737e6229262a79b470f75d9807fb"
+    },
+    {
+      "path": "dist/assets/ogyu-detail-hollow.webp",
+      "url": "https://www.his-trip.info/siseki/img/%EF%BD%83ac00805.jpg",
+      "source_sha256": "add2119c58f320816ff8b8478cf3f7dae81910db721850699d651cfc23961591",
+      "blob_sha": "c5827346646cb800df721367472b4fcf22fa738f"
+    },
+    {
+      "path": "dist/assets/ogyu-detail-stonework.webp",
+      "url": "https://www.his-trip.info/siseki/img/%EF%BD%83ac00813.jpg",
+      "source_sha256": "f2c543818a6cd78b56c81e0df4249ffc0daff2446e4c87a153819d17c813362c",
+      "blob_sha": "2e7eba9d7417298eaac92b1cbd6706e0acdd0bc2"
+    },
+    {
+      "path": "dist/assets/ogyu-detail-water-path.webp",
+      "url": "https://www.his-trip.info/siseki/img/%EF%BD%83ac00819.jpg",
+      "source_sha256": "e05a6e9a7481dcc49a398bf79d6474613896c472cc8576939fe079c341a8aab3",
+      "blob_sha": "ac5e3beb4c6f458fffe71ae68dab2f4e891cfea3"
+    },
+    {
+      "path": "dist/assets/tomoe-detail-road.webp",
+      "url": "https://www.his-trip.info/siseki/img/bac012%20%2813.5%29.jpg",
+      "source_sha256": "73194183f6a1c639fbde135e868d894d6ac33c09880e617650eb24871c054e17",
+      "blob_sha": "4b3c2a93dd07db0dc51c0fcc03046bed19ce5963"
+    },
+    {
+      "path": "dist/assets/tomoe-detail-shrine.webp",
+      "url": "https://www.his-trip.info/siseki/img/bac012%20%2812%29.jpg",
+      "source_sha256": "a77eda4d99c8b0e76fd3de4cfd7c82be945b78b7814272cf3e0cf26da9583404",
+      "blob_sha": "05429499045b03d47e5a166d9a0f839180300739"
+    },
+    {
+      "path": "dist/assets/yotsuya-detail-terraces.webp",
+      "url": "https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0f/Yotsuyanosenmaida.jpg/1920px-Yotsuyanosenmaida.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=thumbnail",
+      "source_sha256": "1e717d7d4cda932442ac34ec02205e20755f54098ccf737a7417c54881734ace",
+      "blob_sha": "7198b6beee7b7af4953ab881728c415f92042a60"
+    }
+  ]
+}
